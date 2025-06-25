@@ -1,0 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UI;
+using TMPro;
+using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
+
+public class ParameterSetter : MonoBehaviour
+{
+    [SerializeField] private int m_participantID;
+    [SerializeField] private ExperimentSpace m_experimentSpace;
+    [SerializeField] private bool m_passthrough;
+
+    [SerializeField] private Slider participantIDSlider;
+    [SerializeField] private TextMeshProUGUI participantIDValue;
+    [SerializeField] private Toggle condition;
+    [SerializeField] private TMP_Dropdown location;
+
+    public int participantID
+    {
+        get => m_participantID;
+        set => m_participantID = value;
+    }
+
+    public ExperimentSpace experimentSpace
+    {
+        get => m_experimentSpace;
+        set => m_experimentSpace = value;
+    }
+
+    public bool passthrough
+    {
+        get => m_passthrough;
+        set => m_passthrough = value;
+    }
+
+    public void SetParticipantID()
+    {
+        this.participantID = (int)participantIDSlider.value;
+        this.participantIDValue.text = this.participantID.ToString("00");
+    }
+
+    public void SetConditionData(bool isOn)
+    {
+        m_passthrough = isOn;
+    }
+
+    public void SetLocationData(int index)
+    {
+        string selectedOption = location.options[index].text;
+        switch (selectedOption)
+        {
+            case "Corridor":
+                experimentSpace = ExperimentSpace.Corridor;
+                break;
+            case "Office":
+                experimentSpace = ExperimentSpace.Office;
+                break;
+            default:
+                break;
+        }
+    }
+    public void Start(){
+        GameObject.DontDestroyOnLoad(this);
+    }
+    public void CheckAllData()
+    {
+        
+            Debug.Log("Participant ID: " + m_participantID);
+            Debug.Log("Experiment Space: " + m_experimentSpace);
+            Debug.Log("Passthrough: " + (m_passthrough ? "On" : "Off"));
+            SceneManager.LoadScene("Main");
+        
+        
+    }
+
+    
+}
