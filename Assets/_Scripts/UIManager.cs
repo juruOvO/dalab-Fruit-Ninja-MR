@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     // [SerializeField] private TextMeshProUGUI rounds;
     // [SerializeField] private TextMeshProUGUI time;
     [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private GameObject gameOver;
     [SerializeField] private TextMeshProUGUI combo;
     // [SerializeField] private TextMeshProUGUI gameParams;
 
@@ -41,8 +42,9 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameManager.IsGameOver())
+        if (!gameManager.IsGameOver())
         {
+            gameOver.SetActive(false);
             // GAME INFO
             // turns.text = objectSpawner.TurnRatio[0].ToString() + " / " + objectSpawner.TurnRatio[1].ToString();
             // rounds.text = objectSpawner.RoundRatio[0].ToString("00") + " / " + objectSpawner.RoundRatio[1].ToString("00");
@@ -57,13 +59,15 @@ public class UIManager : MonoBehaviour
             // GAME PARAMS
             // gameParams.text = gameManager.GetPariticipantID() + "\t" + (gameManager.GetPassthrough() ? "On" : "Off");
         }
-        else{
+        else
+        {
             // info.SetActive(false);
             // info2.SetActive(false);
             // info3.SetActive(true);
 
             // endTime.text = time.text;
             // endScore.text = score.text;
+            gameOver.SetActive(true);
         }
     }
 }

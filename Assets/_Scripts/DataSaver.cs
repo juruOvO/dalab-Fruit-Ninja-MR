@@ -60,6 +60,7 @@ public class DataSaver : MonoBehaviour
         gameStartTimeStamp = new DateTimeOffset(gameStartTime).ToUnixTimeSeconds().ToString();
 
         outputFolder = Path.Combine(Application.persistentDataPath, "Results");
+        Debug.Log(outputFolder);
         if (!Directory.Exists(outputFolder))
         {
             Directory.CreateDirectory(outputFolder);

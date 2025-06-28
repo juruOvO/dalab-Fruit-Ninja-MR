@@ -17,12 +17,12 @@ MonoBehaviour:
   adaptiveHand: 0
   highFrequencyHand: 0
   openMRC: 1
-  faceTracking: 0
+  faceTracking: 1
   lipsyncTracking: 0
   eyeTracking: 0
   eyetrackingCalibration: 0
   enableETFR: 0
-  foveationLevel: 0
+  foveationLevel: -1
   latelatching: 0
   latelatchingDebug: 1
   enableSubsampled: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   mrSafeguard: 0
   enableRecommendMSAA: 0
   recommendSubsamping: 0
-  recommendMSAA: 0
+  recommendMSAA: 1
   validationFFREnabled: 0
   validationETFREnabled: 0
   portalInited: 1

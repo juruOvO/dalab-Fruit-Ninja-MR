@@ -46,7 +46,7 @@ public class Fruit : MonoBehaviour
         // Debug.Log(other.tag);
         if(other.tag.Equals("Kanata") && canCut){
             canCut = false;
-            Debug.Log(other.tag);
+            //Debug.Log(other.tag);
             // Update Game Data
             dataSaver.currentActualScore += award;
             dataSaver.currentFruitCutted ++;
