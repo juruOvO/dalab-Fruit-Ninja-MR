@@ -1,7 +1,9 @@
 public enum ExperimentSpace
 {
-    Office,
-    Corridor
+    Baseline,
+    Character,
+    Object,
+    Abstract
 }
 
 

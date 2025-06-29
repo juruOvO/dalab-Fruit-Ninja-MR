@@ -51,18 +51,27 @@ public class ParameterSetter : MonoBehaviour
     public void SetLocationData(int index)
     {
         string selectedOption = location.options[index].text;
+        //Debug.Log("index:" + index + "selectedoption:" + selectedOption);
         switch (selectedOption)
         {
-            case "Corridor":
-                experimentSpace = ExperimentSpace.Corridor;
+            case "Baseline":
+                experimentSpace = ExperimentSpace.Baseline;
                 break;
-            case "Office":
-                experimentSpace = ExperimentSpace.Office;
+            case "Character":
+                experimentSpace = ExperimentSpace.Character;
+                break;
+            case "Object":
+                experimentSpace = ExperimentSpace.Object;
+                break;
+            case "Abstract":
+                experimentSpace = ExperimentSpace.Abstract;
                 break;
             default:
+                experimentSpace = ExperimentSpace.Baseline; // 默认值
                 break;
         }
     }
+
     public void Start(){
         GameObject.DontDestroyOnLoad(this);
     }

@@ -2,21 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
-
 public class DataSaver : MonoBehaviour
 {
-
-    [Header("Experiment Settings")]
-    private int participantID;
-    private ExperimentSpace experimentSpace;
-    private bool passthrough;
-
     [Header("Related Files Setting")]
     [SerializeField] private string outputFolder;
-
     [SerializeField] private string outputFile;
 
     [Header("Data Observe")]
@@ -33,20 +24,19 @@ public class DataSaver : MonoBehaviour
     public int currentObstacleSpawned, totalObstacleSpawned;
     public int currentComboCnt;
     public int currentMaxComboCnt, totalMaxComboCnt;
-    
 
     public int score;
-
+    private int participantID;
+    private ExperimentSpace experimentSpace;
+    private bool passthrough;
     private GameManager gameManager;
 
-    private readonly string header
-    = "ID,Experiment Space,Passthrough,Record Time,Config Name,"
-    + "Actual Score,Perfect Score,"
-    + "FruitCutted,FruitSpawned,FruitCutRate,FruitMissingRate,"
-    + "BombCutted,BombSpawned,BombCutRate,BombAvoidRate,"
-    + "MaxComboCnt,"
-    + "ObstacleHit, ObstacleSpawned";
-
+    // 新的表头设计 - PID + 4个条件 * 4个指标 = 17列
+    private readonly string header = "PID," +
+        "ActualScore_Baseline,ActualScore_Character,ActualScore_Object,ActualScore_Abstract," +
+        "FruitCutRate_Baseline,FruitCutRate_Character,FruitCutRate_Object,FruitCutRate_Abstract," +
+        "BombAvoidRate_Baseline,BombAvoidRate_Character,BombAvoidRate_Object,BombAvoidRate_Abstract," +
+        "MaxCombo_Baseline,MaxCombo_Character,MaxCombo_Object,MaxCombo_Abstract";
 
     void Start()
     {
@@ -55,24 +45,21 @@ public class DataSaver : MonoBehaviour
         participantID = gameManager.GetPariticipantID();
         experimentSpace = gameManager.GetExperimentSpace();
         passthrough = gameManager.GetPassthrough();
+        Debug.Log(experimentSpace);
 
         gameStartTime = DateTime.Now;
         gameStartTimeStamp = new DateTimeOffset(gameStartTime).ToUnixTimeSeconds().ToString();
 
+        // 统一的输出文件
         outputFolder = Path.Combine(Application.persistentDataPath, "Results");
-        Debug.Log(outputFolder);
         if (!Directory.Exists(outputFolder))
         {
             Directory.CreateDirectory(outputFolder);
         }
 
-        outputFolder = Path.Combine(outputFolder, this.participantID.ToString());
-        if (!Directory.Exists(outputFolder))
-        {
-            Directory.CreateDirectory(outputFolder);
-        }
-
-        outputFile = Path.Combine(outputFolder, this.experimentSpace.ToString() + "-" + (this.passthrough ? "On" : "Off") + "-" + gameStartTimeStamp + ".csv");
+        outputFile = Path.Combine(outputFolder, "ExperimentResults.csv");
+        
+        // 如果文件不存在，创建并写入表头
         if (!File.Exists(outputFile))
         {
             using StreamWriter headerWriter = File.CreateText(outputFile);
@@ -125,93 +112,100 @@ public class DataSaver : MonoBehaviour
         currentObstacleSpawned = 0;
     }
 
-    private string CurrentDataProcess(string configName)
-    {
-        // Basic Info
-        string dataTmp = participantID.ToString() + "," + experimentSpace + "," + (this.passthrough ? "On" : "Off") + "," + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffffff") + "," + configName + ",";
-
-        // Record Score
-        dataTmp += currentActualScore + "," + currentPerfectScore + ",";
-
-        // Fruit Related
-        double fruitCutRate = (double)currentFruitCutted / currentFruitSpawned;
-        double fruitMissingRate = 1 - fruitCutRate;
-
-        dataTmp += currentFruitCutted + "," + currentFruitSpawned + ",";
-        dataTmp += fruitCutRate + "," + fruitMissingRate + ",";
-
-        // Bomb Related
-        double bombCutRate = (double)currentBombCutted / currentBombSpawned;
-        double bombAvoidRate = 1 - bombCutRate;
-
-        dataTmp += currentBombCutted + "," + currentBombSpawned + ",";
-        dataTmp += bombCutRate + "," + bombAvoidRate + ",";
-
-        // Obstacle Related
-        double obstacleCutRate = (double)currentObstacleHit / currentObstacleSpawned;
-        double obstacleAvoidRate = 1 - obstacleCutRate;
-
-        dataTmp += currentObstacleHit + "," + currentObstacleSpawned + ",";
-        dataTmp += obstacleCutRate + "," + obstacleAvoidRate + ",";
-
-        // Max Combo
-        dataTmp += currentMaxComboCnt;
-
-        return dataTmp;
-    }
-
     public void SaveCurrentData(string configName)
     {
-        string currentData = CurrentDataProcess(configName);
+        // 只做数据更新，不保存到文件
         DataUpdate();
-
-        StreamWriter contentWriter = new StreamWriter(outputFile, true);
-        contentWriter.WriteLine(currentData);
-        contentWriter.Close();
-    }
-
-    private string TotalDataProcess()
-    {
-        // Basic Info
-        string dataTmp = participantID.ToString() + "," + experimentSpace + "," + (this.passthrough ? "On" : "Off") + "," + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:ffffff") + "," + "total" + ",";
-
-        // Record Score
-        dataTmp += totalActualScore + "," + totalPerfectScore + ",";
-
-        // Fruit Related
-        double fruitCutRate = (double)totalFruitCutted / totalFruitSpawned;
-        double fruitMissingRate = 1 - fruitCutRate;
-
-        dataTmp += totalFruitCutted + "," + totalFruitSpawned + ",";
-        dataTmp += fruitCutRate + "," + fruitMissingRate + ",";
-
-        // Bomb Related
-        double bombCutRate = (double)totalBombCutted / totalBombSpawned;
-        double bombAvoidRate = 1 - bombCutRate;
-
-        dataTmp += totalBombCutted + "," + totalBombSpawned + ",";
-        dataTmp += bombCutRate + "," + bombAvoidRate + ",";
-
-        // Obstacle Related
-        double obstacleCutRate = (double)totalObstacleHit / totalObstacleSpawned;
-        double obstacleAvoidRate = 1 - obstacleCutRate;
-
-        dataTmp += totalObstacleHit + "," + totalObstacleSpawned + ",";
-        dataTmp += obstacleCutRate + "," + obstacleAvoidRate + ",";
-
-        // Max Combo
-        dataTmp += totalMaxComboCnt;
-
-        return dataTmp;
     }
 
     public void SaveTotalData()
     {
-        string totalData = TotalDataProcess();
+        // 计算当前条件的数据
+        double fruitCutRate = totalFruitSpawned > 0 ? (double)totalFruitCutted / totalFruitSpawned : 0;
+        double bombAvoidRate = totalBombSpawned > 0 ? 1.0 - (double)totalBombCutted / totalBombSpawned : 1.0;
 
-        StreamWriter contentWriter = new StreamWriter(outputFile, true);
-        contentWriter.WriteLine(totalData);
-        contentWriter.Close();
+        // 读取现有CSV文件
+        List<string> lines = new List<string>();
+        if (File.Exists(outputFile))
+        {
+            lines = File.ReadAllLines(outputFile).ToList();
+        }
+
+        // 查找是否已存在该PID的数据行
+        int targetRowIndex = -1;
+        for (int i = 1; i < lines.Count; i++) // 跳过表头
+        {
+            string[] values = lines[i].Split(',');
+            if (values.Length > 0 && values[0] == participantID.ToString())
+            {
+                targetRowIndex = i;
+                break;
+            }
+        }
+
+        int conditionOffset = GetColumnOffset(experimentSpace);
+
+        string[] rowData;
+        if (targetRowIndex == -1)
+        {
+            // 新建行：PID + 16个空值
+            rowData = new string[17];
+            rowData[0] = participantID.ToString();
+            for (int i = 1; i < 17; i++)
+            {
+                rowData[i] = "";
+            }
+            targetRowIndex = lines.Count;
+            lines.Add("");
+        }
+        else
+        {
+            // 解析现有行
+            rowData = lines[targetRowIndex].Split(',');
+            // 确保数组长度足够
+            if (rowData.Length < 17)
+            {
+                Array.Resize(ref rowData, 17);
+            }
+        }
+
+        // 按新的列排列填入数据
+        // ActualScore组 (列1-4)
+        rowData[1 + conditionOffset] = totalActualScore.ToString();
+        
+        // FruitCutRate组 (列5-8)  
+        rowData[5 + conditionOffset] = fruitCutRate.ToString("F4");
+        
+        // BombAvoidRate组 (列9-12)
+        rowData[9 + conditionOffset] = bombAvoidRate.ToString("F4");
+        
+        // MaxCombo组 (列13-16)
+        rowData[13 + conditionOffset] = totalMaxComboCnt.ToString();
+
+        // 重新组装行数据
+        lines[targetRowIndex] = string.Join(",", rowData);
+
+        // 写回文件
+        File.WriteAllLines(outputFile, lines);
+
+        Debug.Log($"数据已保存：PID={participantID}, 条件={experimentSpace}");
     }
 
+    private int GetColumnOffset(ExperimentSpace space)
+    {
+        // 返回对应条件的列索引偏移
+        switch (space)
+        {
+            case ExperimentSpace.Baseline:
+                return 0; // Baseline在每组的第1个位置
+            case ExperimentSpace.Character:
+                return 1; // Character在每组的第2个位置
+            case ExperimentSpace.Object:
+                return 2; // Object在每组的第3个位置
+            case ExperimentSpace.Abstract:
+                return 3; // Abstract在每组的第4个位置
+            default:
+                return 0;
+        }
+    }
 }
