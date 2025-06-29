@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
         this.hitReminder.SetActive(true);
         reminderTime = 0.0f;
     }
-    
+
     public void RestartGame()
     {
         // 可选：保存当前进度
@@ -166,9 +166,15 @@ public class GameManager : MonoBehaviour
         {
             dataSaver.SaveCurrentData("restart");
         }
-        
+
         // 重新加载当前场景
         UnityEngine.SceneManagement.SceneManager.LoadScene(
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+    
+    public void ReturnToMenu()
+    {
+        // 返回Menu场景
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 }
