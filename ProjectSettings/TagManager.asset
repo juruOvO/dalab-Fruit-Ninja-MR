@@ -8,6 +8,7 @@ TagManager:
   - GM
   - Generator
   - Obstacle
+  - Camera0
   layers:
   - Default
   - TransparentFX

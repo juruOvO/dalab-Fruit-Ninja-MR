@@ -77,13 +77,29 @@ public class ParameterSetter : MonoBehaviour
     }
     public void CheckAllData()
     {
-        
-            Debug.Log("Participant ID: " + m_participantID);
-            Debug.Log("Experiment Space: " + m_experimentSpace);
-            Debug.Log("Passthrough: " + (m_passthrough ? "On" : "Off"));
-            SceneManager.LoadScene("Main");
-        
-        
+
+        Debug.Log("Participant ID: " + m_participantID);
+        Debug.Log("Experiment Space: " + m_experimentSpace);
+        Debug.Log("Passthrough: " + (m_passthrough ? "On" : "Off"));
+        //SceneManager.LoadScene("Main");
+        switch (m_experimentSpace)
+        {
+            case ExperimentSpace.Baseline:
+                SceneManager.LoadScene("Baseline", LoadSceneMode.Single);
+                break;
+            case ExperimentSpace.Character:
+                SceneManager.LoadScene("Character", LoadSceneMode.Single);
+                break;
+            case ExperimentSpace.Object:
+                SceneManager.LoadScene("Object", LoadSceneMode.Single);
+                break;
+            case ExperimentSpace.Abstract:
+                SceneManager.LoadScene("Abstract", LoadSceneMode.Single);
+                break;
+            default:
+                SceneManager.LoadScene("Baseline", LoadSceneMode.Single);
+                break;
+        }
     }
 
     

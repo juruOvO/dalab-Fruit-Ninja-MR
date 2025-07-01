@@ -8,9 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 18dcadfcb48e3de4cbff83878bba5e55
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Baseline.unity
+    guid: 30b08e2d6476caf40b7df0c65894be75
+  - enabled: 1
+    path: Assets/Scenes/Character.unity
+    guid: 16f689f61e1c58344a2740c811cd0780
+  - enabled: 1
+    path: Assets/Scenes/Object.unity
+    guid: ea18d6d26523712469e3c9d7d48b31a2
+  - enabled: 1
+    path: Assets/Scenes/Abstract.unity
+    guid: ca3b2246159d0294383c10a09a7a12b3
   m_configObjects:
     Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: dcba6b9f1273a494c866ffa559d07178, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 9794d9132bb09ad4491f9d8f2384bebf, type: 2}

@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     void Update()
     {
         // When The Game Is Over
