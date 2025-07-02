@@ -3386,7 +3386,6 @@ MonoBehaviour:
   participantID: 0
   experimentSpace: 0
   passthrough: 0
-  _VR_: {fileID: 175032585}
   _Passthrough_: {fileID: 902650262}
   hitReminder: {fileID: 1333670873}
   reminderTime_std: 0.5
