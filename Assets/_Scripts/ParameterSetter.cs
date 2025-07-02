@@ -85,19 +85,19 @@ public class ParameterSetter : MonoBehaviour
         switch (m_experimentSpace)
         {
             case ExperimentSpace.Baseline:
-                SceneManager.LoadScene("Baseline", LoadSceneMode.Single);
+                SceneManager.LoadScene("Baseline");
                 break;
             case ExperimentSpace.Character:
-                SceneManager.LoadScene("Character", LoadSceneMode.Single);
+                SceneManager.LoadScene("Character");
                 break;
             case ExperimentSpace.Object:
-                SceneManager.LoadScene("Object", LoadSceneMode.Single);
+                SceneManager.LoadScene("Object");
                 break;
             case ExperimentSpace.Abstract:
-                SceneManager.LoadScene("Abstract", LoadSceneMode.Single);
+                SceneManager.LoadScene("Abstract");
                 break;
             default:
-                SceneManager.LoadScene("Baseline", LoadSceneMode.Single);
+                SceneManager.LoadScene("Baseline");
                 break;
         }
     }

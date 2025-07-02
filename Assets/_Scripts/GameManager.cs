@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool passthrough;
 
     [Header("Env Prefabs")]
-    [SerializeField] private GameObject _VR_;
+    //[SerializeField] private GameObject _VR_;
     [SerializeField] private GameObject _Passthrough_;
 
     [Header("Hit Reminder")]
@@ -57,13 +57,13 @@ public class GameManager : MonoBehaviour
         // Env Setting
         if (passthrough)
         {
-            _VR_.SetActive(false);
+            //_VR_.SetActive(false);
             _Passthrough_.SetActive(true);
 
         }
         else
         {
-            _VR_.SetActive(true);
+            //_VR_.SetActive(true);
             _Passthrough_.SetActive(false);
         }
 
