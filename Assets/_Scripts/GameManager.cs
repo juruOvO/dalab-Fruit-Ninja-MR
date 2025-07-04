@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pico.Platform;
+using Unity.XR.PXR;
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
@@ -101,13 +103,36 @@ public class GameManager : MonoBehaviour
         // When The Game Is Over
         if (isGameOver)
         {
+            // Check if secondary button (B button) is pressed on either controller to quit
+            List<InputDevice> inputDevices = new List<InputDevice>();
+            InputDevices.GetDevices(inputDevices);
+            
+            foreach (var device in inputDevices)
+            {
+                if (device.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
+                {
+                    bool secondaryButtonPressed = false;
+                    if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out secondaryButtonPressed) && secondaryButtonPressed)
+                    {
+                        Debug.Log("B button pressed - Quitting application");
+                        Application.Quit();
+                        
+                        // For editor testing
+                        #if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+                        #endif
+                        break;
+                    }
+                }
+            }
+            
             // Debug.Log("GAME OVER");
             float waitTime = 6.0f;
             while (waitTime > 0.0f)
             {
                 waitTime -= Time.deltaTime;
             }
-            Application.Quit();
+            //Application.Quit();
         }
 
         if (hitReminder.active == true)
