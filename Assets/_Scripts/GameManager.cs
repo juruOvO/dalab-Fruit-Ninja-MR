@@ -81,10 +81,16 @@ public class GameManager : MonoBehaviour
             {
                 mainCamera.clearFlags = CameraClearFlags.SolidColor;
                 mainCamera.backgroundColor = new Color(0, 0, 0, 0);
+                
+                // Start Pico Passthrough
+                StartPassthrough();
             }
             else
             {
                 mainCamera.clearFlags = CameraClearFlags.Skybox;
+                
+                // Stop Pico Passthrough if it was enabled
+                StopPassthrough();
             }
             Debug.Log(mainCamera.transform.position);
         }
@@ -94,6 +100,26 @@ public class GameManager : MonoBehaviour
         }
 
         isGameOver = false;
+    }
+
+    void OnDestroy()
+    {
+        // Ensure passthrough is disabled when the game object is destroyed
+        if (passthrough)
+        {
+            StopPassthrough();
+        }
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        // When app resumes from pause, re-enable see-through if it was enabled
+        // This is necessary because the Boundary system automatically disables see-through on pause
+        if (!pauseStatus && passthrough)
+        {
+            Debug.Log("App resumed - Re-enabling See-Through");
+            StartPassthrough();
+        }
     }
 
     // Update is called once per frame
@@ -202,5 +228,42 @@ public class GameManager : MonoBehaviour
     {
         // 返回Menu场景
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    }
+
+    private void StartPassthrough()
+    {
+        // Use coroutine to add small delay as recommended by Pico
+        StartCoroutine(EnableSeeThroughWithDelay());
+    }
+
+    private IEnumerator EnableSeeThroughWithDelay()
+    {
+        // Small delay to ensure the system is ready
+        yield return new WaitForSeconds(0.1f);
+        
+        try
+        {
+            // Enable Pico See-Through using the correct property
+            PXR_Manager.EnableVideoSeeThrough = true;
+            Debug.Log("Pico See-Through enabled successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to enable Pico See-Through: {e.Message}");
+        }
+    }
+
+    private void StopPassthrough()
+    {
+        try
+        {
+            // Disable Pico See-Through using the correct property
+            PXR_Manager.EnableVideoSeeThrough = false;
+            Debug.Log("Pico See-Through disabled successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to disable Pico See-Through: {e.Message}");
+        }
     }
 }
