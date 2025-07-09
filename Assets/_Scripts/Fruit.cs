@@ -35,7 +35,7 @@ public class Fruit : MonoBehaviour
             canCut = false;
             
             dataSaver.currentComboCnt = 0;
-            dataSaver.currentActualScore -= punnishment;
+            // dataSaver.currentActualScore -= punnishment;
 
             Destroy(gameObject);
         }
