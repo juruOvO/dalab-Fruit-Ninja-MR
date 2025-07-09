@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator EnableSeeThroughWithDelay()
-    {
+    {   
         // Small delay to ensure the system is ready
         yield return new WaitForSeconds(0.1f);
         
