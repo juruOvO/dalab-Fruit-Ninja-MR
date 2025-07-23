@@ -243,9 +243,9 @@ public class GameManager : MonoBehaviour
         
         try
         {
-            // Enable Pico See-Through using the correct property
-            PXR_Manager.EnableVideoSeeThrough = true;
-            Debug.Log("Pico See-Through enabled successfully");
+            // Enable Pico See-Through using the old version API
+            PXR_Boundary.EnableSeeThroughManual(true);
+            Debug.Log("Pico See-Through enabled successfully (old API)");
         }
         catch (System.Exception e)
         {
@@ -257,9 +257,9 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            // Disable Pico See-Through using the correct property
-            PXR_Manager.EnableVideoSeeThrough = false;
-            Debug.Log("Pico See-Through disabled successfully");
+            // Disable Pico See-Through using the old version API
+            PXR_Boundary.EnableSeeThroughManual(false);
+            Debug.Log("Pico See-Through disabled successfully (old API)");
         }
         catch (System.Exception e)
         {
