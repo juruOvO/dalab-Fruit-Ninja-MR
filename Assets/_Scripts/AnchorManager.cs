@@ -164,16 +164,16 @@ public class AnchorManager : MonoBehaviour
                 }
             }
             //ScaleFloorCeiling();
-            // if (floorPrefab != null)
-            // {
-            //     var floor = Instantiate(floorPrefab);
-            //     floor.transform.SetParent(floorTransform);
-            // }
-            // if (ceilingPrefab != null)
-            // {
-            //     var ceiling = Instantiate(ceilingPrefab);
-            //     ceiling.transform.SetParent(ceilingTransform);
-            // }
+            if (floorPrefab != null)
+            {
+                var floor = Instantiate(floorPrefab);
+                floor.transform.position = floorTransform.position;
+            }
+            if (ceilingPrefab != null)
+            {
+                var ceiling = Instantiate(ceilingPrefab);
+                ceiling.transform.position = ceilingTransform.position;
+            }
         }
     }
 
