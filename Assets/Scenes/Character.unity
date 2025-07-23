@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6faf1a902ead40a227075a5306815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 3
+  threshold: 5
   characterEvents:
   - _index: 0
     TriggerEvent:
@@ -809,11 +809,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460799488}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 35626592f69828a46b391a359649aa2b, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 55ab5624a65064543906b9cff3877f1d, type: 3}
   m_Controller: {fileID: 9100000, guid: 25582e280a1abe24e86afb09f90dce66, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
