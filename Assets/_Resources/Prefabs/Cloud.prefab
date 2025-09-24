@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2408980746228092384}
-  m_Layer: 0
+  - component: {fileID: 1642899186912767866}
+  m_Layer: 6
   m_Name: Cloud
-  m_TagString: Untagged
+  m_TagString: Env
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,6 +44,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1642899186912767866
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408980746228092399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 1.5, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &792285545986389395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,6 +127,10 @@ PrefabInstance:
     - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
       propertyPath: m_Name
       value: Cloud_2 Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
@@ -192,6 +210,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_1 Variant (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
 --- !u!4 &1302458200148526453 stripped
@@ -269,6 +291,10 @@ PrefabInstance:
     - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
       propertyPath: m_Name
       value: Cloud_1 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
@@ -348,6 +374,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_2 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
 --- !u!4 &341187227041513480 stripped
@@ -425,6 +455,10 @@ PrefabInstance:
     - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
       propertyPath: m_Name
       value: Cloud_1 Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
@@ -504,6 +538,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
 --- !u!4 &341187227861445764 stripped
@@ -581,6 +619,10 @@ PrefabInstance:
     - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
       propertyPath: m_Name
       value: Cloud_1 Variant (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
@@ -660,6 +702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_1 Variant (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
 --- !u!4 &1797002202673213138 stripped
@@ -737,6 +783,10 @@ PrefabInstance:
     - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
       propertyPath: m_Name
       value: Cloud_2 Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357882589464908443, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5a2d7a4b73510f458186aa231096eea, type: 3}
@@ -816,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_1 Variant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
 --- !u!4 &7605125693648583659 stripped
@@ -894,6 +948,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud_1 Variant (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
 --- !u!4 &5877901081396082629 stripped
@@ -971,6 +1029,10 @@ PrefabInstance:
     - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
       propertyPath: m_Name
       value: Cloud_1 Variant (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050698968290428422, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3240a1fa09a639e4dab0567f01053844, type: 3}

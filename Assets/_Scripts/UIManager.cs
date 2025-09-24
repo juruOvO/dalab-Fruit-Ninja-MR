@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private GameObject gameOver;
     [SerializeField] private TextMeshProUGUI combo;
+    [SerializeField] private GameObject startGamePanel; // 新增：开始游戏面板
+    [SerializeField] private Button startGameButton; // 新增：开始游戏按钮
     // [SerializeField] private TextMeshProUGUI gameParams;
 
     // [SerializeField] private TextMeshProUGUI endTime;
@@ -34,6 +36,18 @@ public class UIManager : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
         dataSaver = GameObject.FindGameObjectWithTag("GM").GetComponent<DataSaver>();
 
+        // 初始化开始游戏按钮
+        if (startGameButton != null)
+        {
+            startGameButton.onClick.AddListener(OnStartGameButtonClicked);
+        }
+
+        // 确保开始游戏面板在游戏开始时显示
+        if (startGamePanel != null)
+        {
+            startGamePanel.SetActive(true);
+        }
+
         // info.SetActive(true);
         // info2.SetActive(true);
         // info3.SetActive(false);
@@ -42,14 +56,34 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 如果游戏还没开始，显示开始游戏面板，隐藏其他UI
+        if (!gameManager.IsGameStarted())
+        {
+            if (startGamePanel != null)
+            {
+                startGamePanel.SetActive(true);
+            }
+            if (gameOver != null)
+            {
+                gameOver.SetActive(false);
+            }
+            return; // 游戏未开始时不更新其他UI
+        }
+
         if (!gameManager.IsGameOver())
         {
             gameOver.SetActive(false);
+            // 游戏开始后隐藏开始游戏面板
+            if (startGamePanel != null)
+            {
+                startGamePanel.SetActive(false);
+            }
+            
             // GAME INFO
             // turns.text = objectSpawner.TurnRatio[0].ToString() + " / " + objectSpawner.TurnRatio[1].ToString();
             // rounds.text = objectSpawner.RoundRatio[0].ToString("00") + " / " + objectSpawner.RoundRatio[1].ToString("00");
 
-            // TimeSpan elapsedTime = DateTime.Now - dataSaver.GetStartTime();
+            TimeSpan elapsedTime = DateTime.Now - dataSaver.GetStartTime();
             // time.text = string.Format("{0:D2}:{1:D2}:{2:D4}", elapsedTime.Minutes, elapsedTime.Seconds, elapsedTime.Milliseconds);
 
             score.text = dataSaver.score.ToString("0000");
@@ -69,5 +103,14 @@ public class UIManager : MonoBehaviour
             // endScore.text = score.text;
             gameOver.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// 开始游戏按钮点击事件
+    /// </summary>
+    private void OnStartGameButtonClicked()
+    {
+        gameManager.StartGame();
+        Debug.Log("Start game button clicked!");
     }
 }

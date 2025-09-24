@@ -25,27 +25,29 @@ public class DataSaver : MonoBehaviour
     public int currentComboCnt;
     public int currentMaxComboCnt, totalMaxComboCnt;
 
+    // 新增：时间记录数据
+    public float currentGameCoreTime, totalGameCoreTime;      // 玩家看游戏核心元素的时间
+    public float currentRealWorldTime, totalRealWorldTime;    // 玩家看现实世界的时间
+    public float currentGameEnvTime, totalGameEnvTime;        // 玩家看游戏环境元素的时间
+
     public int score;
     private int participantID;
     private ExperimentSpace experimentSpace;
-    private bool passthrough;
-    private GameManager gameManager;
+    private ParameterSetter parameterSetter;
 
-    // 新的表头设计 - PID + 4个条件 * 4个指标 = 17列
+    // 修改表头设计 - 原有17列 + 新增12列（4个条件 * 3个时间指标）= 29列
     private readonly string header = "PID," +
         "ActualScore_Baseline,ActualScore_Character,ActualScore_Object,ActualScore_Abstract," +
         "FruitCutRate_Baseline,FruitCutRate_Character,FruitCutRate_Object,FruitCutRate_Abstract," +
         "BombAvoidRate_Baseline,BombAvoidRate_Character,BombAvoidRate_Object,BombAvoidRate_Abstract," +
-        "MaxCombo_Baseline,MaxCombo_Character,MaxCombo_Object,MaxCombo_Abstract";
+        "MaxCombo_Baseline,MaxCombo_Character,MaxCombo_Object,MaxCombo_Abstract," +
+        "GameCoreTime_Baseline,GameCoreTime_Character,GameCoreTime_Object,GameCoreTime_Abstract," +
+        "RealWorldTime_Baseline,RealWorldTime_Character,RealWorldTime_Object,RealWorldTime_Abstract," +
+        "GameEnvTime_Baseline,GameEnvTime_Character,GameEnvTime_Object,GameEnvTime_Abstract";
 
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
-
-        participantID = gameManager.GetPariticipantID();
-        experimentSpace = gameManager.GetExperimentSpace();
-        passthrough = gameManager.GetPassthrough();
-        Debug.Log(experimentSpace);
+        parameterSetter = GameObject.Find("Parameters Setter").GetComponent<ParameterSetter>();
 
         gameStartTime = DateTime.Now;
         gameStartTimeStamp = new DateTimeOffset(gameStartTime).ToUnixTimeSeconds().ToString();
@@ -95,6 +97,11 @@ public class DataSaver : MonoBehaviour
         totalObstacleHit += currentObstacleHit;
         totalObstacleSpawned += currentObstacleSpawned;
 
+        // 新增：更新时间数据
+        totalGameCoreTime += currentGameCoreTime;
+        totalRealWorldTime += currentRealWorldTime;
+        totalGameEnvTime += currentGameEnvTime;
+
         // Reset Current
         currentActualScore = 0;
         currentPerfectScore = 0;
@@ -110,6 +117,27 @@ public class DataSaver : MonoBehaviour
 
         currentObstacleHit = 0;
         currentObstacleSpawned = 0;
+
+        // 新增：重置当前时间数据
+        currentGameCoreTime = 0;
+        currentRealWorldTime = 0;
+        currentGameEnvTime = 0;
+    }
+
+    // 新增：记录时间的方法
+    public void RecordGameCoreTime(float time)
+    {
+        currentGameCoreTime += time;
+    }
+
+    public void RecordRealWorldTime(float time)
+    {
+        currentRealWorldTime += time;
+    }
+
+    public void RecordGameEnvTime(float time)
+    {
+        currentGameEnvTime += time;
     }
 
     public void SaveCurrentData(string configName)
@@ -123,6 +151,10 @@ public class DataSaver : MonoBehaviour
         // 计算当前条件的数据
         double fruitCutRate = totalFruitSpawned > 0 ? (double)totalFruitCutted / totalFruitSpawned : 0;
         double bombAvoidRate = totalBombSpawned > 0 ? 1.0 - (double)totalBombCutted / totalBombSpawned : 1.0;
+
+        // 直接从ParameterSetter获取最新的实验条件
+        participantID = parameterSetter.participantID;
+        experimentSpace = parameterSetter.experimentSpace;
 
         // 读取现有CSV文件
         List<string> lines = new List<string>();
@@ -148,10 +180,10 @@ public class DataSaver : MonoBehaviour
         string[] rowData;
         if (targetRowIndex == -1)
         {
-            // 新建行：PID + 16个空值
-            rowData = new string[17];
+            // 新建行：PID + 28个空值（29列）
+            rowData = new string[29];
             rowData[0] = participantID.ToString();
-            for (int i = 1; i < 17; i++)
+            for (int i = 1; i < 29; i++)
             {
                 rowData[i] = "";
             }
@@ -163,9 +195,9 @@ public class DataSaver : MonoBehaviour
             // 解析现有行
             rowData = lines[targetRowIndex].Split(',');
             // 确保数组长度足够
-            if (rowData.Length < 17)
+            if (rowData.Length < 29)
             {
-                Array.Resize(ref rowData, 17);
+                Array.Resize(ref rowData, 29);
             }
         }
 
@@ -182,6 +214,16 @@ public class DataSaver : MonoBehaviour
         // MaxCombo组 (列13-16)
         rowData[13 + conditionOffset] = totalMaxComboCnt.ToString();
 
+        // 新增：时间数据组 (列17-28)
+        // GameCoreTime组 (列17-20)
+        rowData[17 + conditionOffset] = totalGameCoreTime.ToString("F2");
+        
+        // RealWorldTime组 (列21-24)
+        rowData[21 + conditionOffset] = totalRealWorldTime.ToString("F2");
+        
+        // GameEnvTime组 (列25-28)
+        rowData[25 + conditionOffset] = totalGameEnvTime.ToString("F2");
+
         // 重新组装行数据
         lines[targetRowIndex] = string.Join(",", rowData);
 
@@ -189,6 +231,26 @@ public class DataSaver : MonoBehaviour
         File.WriteAllLines(outputFile, lines);
 
         Debug.Log($"数据已保存：PID={participantID}, 条件={experimentSpace}");
+
+        // 添加调用数据重置方法
+        ResetTotalData();
+    }
+
+    private void ResetTotalData()
+    {
+        // 重置所有累积数据
+        totalActualScore = 0;
+        totalPerfectScore = 0;
+        totalFruitCutted = 0;
+        totalFruitSpawned = 0;
+        totalBombCutted = 0;
+        totalBombSpawned = 0;
+        totalMaxComboCnt = 0;
+        totalObstacleHit = 0;
+        totalObstacleSpawned = 0;
+        totalGameCoreTime = 0;
+        totalRealWorldTime = 0;
+        totalGameEnvTime = 0;
     }
 
     private int GetColumnOffset(ExperimentSpace space)

@@ -221,23 +221,11 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Object
       m_Image: {fileID: 0}
-    - m_Text: Abstract
+    - m_Text: Environment
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 613271089}
-        m_TargetAssemblyTypeName: ParameterSetter, Assembly-CSharp
-        m_MethodName: SetLocationData
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &42086251
 MonoBehaviour:
@@ -795,13 +783,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228cec9d45f1f9f49be47861c5cd6aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_participantID: 0
-  m_experimentSpace: 0
-  m_passthrough: 1
-  participantIDSlider: {fileID: 8969571751760315544}
-  participantIDValue: {fileID: 603600113}
-  condition: {fileID: 667406894}
-  location: {fileID: 42086250}
+  participantID: 0
+  experimentSpace: 0
+  passthrough: 0
 --- !u!1 &630349955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,7 +1423,54 @@ MonoBehaviour:
   foregroundLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  backgroundLayerMask:
+  backLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  backgroundCamObj: {fileID: 0}
+  foregroundCamObj: {fileID: 0}
+  mrcBackgroundRT: {fileID: 0}
+  mrcForegroundRT: {fileID: 0}
+  adaptiveResolutionPowerSetting: 1
+  minEyeTextureScale: 0.7
+  maxEyeTextureScale: 1.26
+  enableSuperResolution: 0
+  useRecommendedAntiAliasingLevel: 1
+--- !u!1 &735221478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7313654230448209575, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+  m_PrefabInstance: {fileID: 735221474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &735221479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735221478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9f82377aeb9704193bd866d119aaa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenFade: 0
+  eyeTracking: 1
+  trackingMode: 0
+  sharpeningMode: 0
+  sharpeningEnhance: 0
+  faceTracking: 0
+  lipsyncTracking: 0
+  lateLatching: 0
+  latelatchingDebug: 0
+  bodyTracking: 0
+  foveationLevel: -1
+  adaptiveResolution: 0
+  eyeFoveationLevel: -1
+  foveatedRenderingMode: 0
+  openMRC: 1
+  foregroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  backLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   backgroundCamObj: {fileID: 0}
@@ -1914,6 +1945,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937403079}
   m_CullTransparentMesh: 1
+--- !u!1 &1083940529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1083940531}
+  - component: {fileID: 1083940532}
+  m_Layer: 0
+  m_Name: UI Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1083940531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083940529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.46131364, y: 1.9375737, z: 4.3473334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083940532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083940529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e450a54d299c9543a05fa68b69c8725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  participantIDSlider: {fileID: 8969571751760315544}
+  participantIDValue: {fileID: 603600113}
+  conditionToggle: {fileID: 667406894}
+  locationDropdown: {fileID: 42086250}
 --- !u!1 &1184411785
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,9 +3351,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 613271089}
-        m_TargetAssemblyTypeName: ParameterSetter, Assembly-CSharp
-        m_MethodName: CheckAllData
+      - m_Target: {fileID: 1083940532}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: StartExperiment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

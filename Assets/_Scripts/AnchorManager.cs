@@ -47,6 +47,7 @@ public class AnchorManager : MonoBehaviour
         if (OnFloorObject == null) return;
         var ObjectHandle = Instantiate(OnFloorObject);
         ObjectHandle.transform.position.Set(0, floorTransform.position.y + FloorOffset, 0);
+        ObjectHandle.tag = "Env";
     }
 
     private void HandleSpacialDrift()

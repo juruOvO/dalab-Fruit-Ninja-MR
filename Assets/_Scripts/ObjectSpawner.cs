@@ -45,10 +45,30 @@ public class ObjectSpawner : MonoBehaviour
             currentTurn = 0;
             Debug.Log(dataList.Count);
 
-            StartCoroutine(GenerateObject());
+            // 等待游戏开始后再开始生成对象
+            StartCoroutine(WaitForGameStart());
         }
     }
     
+
+    /// <summary>
+    /// 等待游戏开始的协程
+    /// </summary>
+    IEnumerator WaitForGameStart()
+    {
+        Debug.Log("Waiting for game to start...");
+        
+        // 等待游戏开始
+        while (!gameManager.IsGameStarted())
+        {
+            yield return null; // 等待一帧
+        }
+        
+        Debug.Log("Game started! Beginning object generation...");
+        
+        // 游戏开始后开始生成对象
+        StartCoroutine(GenerateObject());
+    }
 
     IEnumerator GenerateObject(){
         while(!gameManager.IsGameOver()){
@@ -98,6 +118,7 @@ public class ObjectSpawner : MonoBehaviour
 
     private void InstantiateObject(int id){
         GameObject objectInstance = Instantiate(prefabs[id]);
+        objectInstance.tag = "Core";
         // Add Rigidbody
         if (objectInstance.GetComponent<Rigidbody>() == null)
         {

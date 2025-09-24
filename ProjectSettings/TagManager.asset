@@ -9,6 +9,8 @@ TagManager:
   - Generator
   - Obstacle
   - Camera0
+  - Env
+  - Core
   layers:
   - Default
   - TransparentFX
